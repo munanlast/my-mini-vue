@@ -5,6 +5,7 @@ describe('reactivity test', () =>{
         const obj = reactive(origin);
         expect(obj).not.toBe(origin);
         expect(obj.foo).toBe(1);
+        JSON.stringify(obj);
     })
 
 

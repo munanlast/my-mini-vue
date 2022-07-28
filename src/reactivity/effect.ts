@@ -1,14 +1,22 @@
 var activeEffect;
+//
 class  ReactiveEffect {
     private _fn: any;
-    constructor(fn){
+    constructor(fn, public scheduler?){
         this._fn = fn;
     }
     run () {
         activeEffect = this;
-        this._fn();
+        return this._fn();
     }
 }
+export function effect (fn, options:any ={}) {
+
+    const _effect = new ReactiveEffect(fn, options.scheduler);
+    _effect.run();
+    return  _effect.run.bind(_effect);
+}
+
 const effectMap = new Map();
 export  function track (target ,key) {
     let depsMap =  effectMap.get(target);
@@ -28,10 +36,10 @@ export  function track (target ,key) {
 export function trigger (target, key) {
    let dep =  effectMap.get(target).get(key);
    for(let effect of  dep){
-    effect.run();
+    if(effect.scheduler){
+        effect.scheduler()
+    }else {
+        effect.run();
+    }
    }
 };
-export function effect (fn) {
-    const _effect = new ReactiveEffect(fn);
-    _effect.run();
-}
