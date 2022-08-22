@@ -6,8 +6,9 @@ const reactiveGet = createGetter();
 const reactiveSet = createSetter();
 const readonlyGet = createGetter(true);
 const readonlySet = createGetter(true);
+const shallowReadonlyGet = createGetter(true, true);
 
-function createGetter(isReadonly = false){
+function createGetter(isReadonly = false, isShallow = false){
     return function get (target, key) {
 
         if(key === ReactiveEnum.IS_REACTIVE) {
@@ -21,7 +22,7 @@ function createGetter(isReadonly = false){
             track(target, key);
         }
         const res =  Reflect.get(target, key);
-        if(isObject(res)){
+        if(isObject(res) && !isShallow){
             if(isReadonly){
                 return readonly(res)
             }
@@ -51,5 +52,10 @@ export const baseHandlers = {
 }
 export const readOnlyHandlers = {
     get: readonlyGet,
+    set: readonlySet
+}
+
+export const shallowReadonlyHandler ={
+    get: shallowReadonlyGet,
     set: readonlySet
 }

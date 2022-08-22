@@ -1,4 +1,4 @@
-import { reactive, readonly, isReactive, isReadonly} from "../reactive";
+import { reactive, readonly, isReactive, isProxy } from "../reactive";
 describe('reactivity test', () =>{
     it('lucky test', () => {
         const origin = {foo:1};
@@ -6,15 +6,7 @@ describe('reactivity test', () =>{
         expect(obj).not.toBe(origin);
         expect(obj.foo).toBe(1);
         expect(isReactive(obj)).toBe(true);
-    })
-})
-describe('readonly test', () =>{
-    it('lucky test', () => {
-        const origin = {foo:1};
-        const obj = readonly(origin);
-        expect(obj).not.toBe(origin);
-        expect(obj.foo).toBe(1);
-        expect(isReadonly(obj)).toBe(true)
+        expect(isProxy(obj)).toBe(true);
     })
 })
 
@@ -33,3 +25,4 @@ describe('isReactive', () => {
         expect(isReactive(observed.arr[1])).toBe(true);
     })
 })
+
