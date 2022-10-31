@@ -1,18 +1,25 @@
 {
-  "name": "my-mini-vue",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "test": "jest"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "@babel/preset-env": "^7.18.9",
-    "@babel/preset-typescript": "^7.18.6",
-    "@types/jest": "^28.1.6",
-    "babel-jest": "^28.1.3",
-    "jest": "^28.1.3",
-    "typescript": "^4.7.4"
-  }
+	"name": "my-mini-vue",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"test": "jest",
+		"build": "rollup -c rollup.config.js"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.18.9",
+		"@babel/preset-env": "^7.18.9",
+		"@babel/preset-typescript": "^7.18.6",
+		"@rollup/plugin-typescript": "^9.0.2",
+		"@types/jest": "^28.1.6",
+		"babel-jest": "^28.1.3",
+		"jest": "^28.1.3",
+		"rollup": "^3.2.3",
+		"tslib": "^2.4.0",
+		"typescript": "^4.7.4"
+	},
+	"repository": "git@github.com:munanlast/my-mini-vue.git",
+	"author": "'munanlast' <569365548@163.com>"
 }
