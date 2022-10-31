@@ -41,6 +41,22 @@ export function unRef(raw) {
 	return isRef(raw) ? raw.value : raw;
 }
 
+export function proxyRefs(raw) {
+	return new Proxy(raw, {
+		get(target, key) {
+			const value = Reflect.get(target, key);
+			return isRef(value) ? unRef(value) : value;
+		},
+		set(target, key, value) {
+			if (isRef(target[key]) && !isRef(value)) {
+				return (target[key].value = value);
+			} else {
+				return Reflect.set(target, key, value);
+			}
+		},
+	});
+}
+
 function convert(value) {
 	return isObject(value) ? reactive(value) : value;
 }
