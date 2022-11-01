@@ -6,6 +6,10 @@ export function render(vNode, container) {
 }
 
 function patch(vNode, container) {
+	// 简要区分element / component
+
+	processElement(vNode, container);
+
 	processComponent(vNode, container);
 }
 function processComponent(vNode: any, container: any) {
@@ -19,4 +23,7 @@ function mountComponent(vNode: any, container: any) {
 function setupRenderEffect(instance: any, container) {
 	const subTree = instance.render();
 	patch(subTree, container);
+}
+function processElement(vNode: any, container: any) {
+	throw new Error("Function not implemented.");
 }
