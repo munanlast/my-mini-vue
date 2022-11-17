@@ -1,7 +1,10 @@
-import { h } from "../../lib/guide-mini-vue.esm";
+import { h } from "../../lib/guide-mini-vue.esm.js";
 export const App = {
 	render() {
-		return h("div", "hi, do you want to do something?" + this.msg);
+		return h("div", { id: "root" }, [
+			h("p", { class: "red" }, "this is p"),
+			h("pre", { class: "blue" }, "this is pre"),
+		]);
 	},
 	setup() {
 		return {

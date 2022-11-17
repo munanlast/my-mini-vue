@@ -1,5 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
-import pkg from "./package.json";
+import resolve from "@rollup/plugin-node-resolve";
+import json from "@rollup/plugin-json";
+import pkg from "./load-package.cjs";
 export default {
 	input: "./src/index.ts",
 	output: [
@@ -14,5 +16,11 @@ export default {
 			sourcemap: true,
 		},
 	],
-	plugins: [typescript()],
+	plugins: [
+		resolve(),
+		typescript(),
+		json({
+			namedExports: false,
+		}),
+	],
 };

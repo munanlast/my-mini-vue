@@ -7,10 +7,11 @@ export function render(vNode, container) {
 
 function patch(vNode, container) {
 	// 简要区分element / component
-
-	processElement(vNode, container);
-
-	processComponent(vNode, container);
+	if (typeof vNode.type === "string") {
+		processElement(vNode, container);
+	} else {
+		processComponent(vNode, container);
+	}
 }
 function processComponent(vNode: any, container: any) {
 	mountComponent(vNode, container);
@@ -25,5 +26,24 @@ function setupRenderEffect(instance: any, container) {
 	patch(subTree, container);
 }
 function processElement(vNode: any, container: any) {
-	throw new Error("Function not implemented.");
+	mountElement(vNode, container);
+}
+function mountElement(vNode: any, container: any) {
+	const el = document.createElement(vNode.type);
+	const { props } = vNode;
+	for (const key in props) {
+		const val = props[key];
+		el.setAttribute(key, val);
+	}
+	const { children } = vNode;
+	//  string or array
+	if (typeof children === "string") {
+		el.textContent = children;
+	} else {
+		children.forEach((child) => {
+			patch(child, el);
+		});
+	}
+
+	container.append(el);
 }
